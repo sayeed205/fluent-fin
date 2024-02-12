@@ -6,24 +6,16 @@ use tauri::Manager;
 use window_shadows::set_shadow;
 use window_vibrancy::apply_mica;
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app: &mut tauri::App| {
             let window = app.get_window("main").unwrap();
 
             let mode = dark_light::detect();
 
             let is_dark = match mode {
-                // Dark mode
                 dark_light::Mode::Dark => true,
-                // Light mode
                 dark_light::Mode::Light => false,
                 // Unspecified
                 dark_light::Mode::Default => false,

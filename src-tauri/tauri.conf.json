@@ -1,59 +1,59 @@
 {
-    "build": {
-        "beforeDevCommand": "pnpm dev",
-        "beforeBuildCommand": "pnpm build",
-        "devPath": "http://localhost:1420",
-        "distDir": "../dist"
-    },
-    "package": {
-        "productName": "Fluent Fin",
-        "version": "../package.json"
-    },
-    "tauri": {
-        "allowlist": {
-            "all": false,
-            "shell": {
-                "all": false,
-                "open": true
-            },
-            "window": {
-                "setFullscreen": true
-            },
-            "http": {
-                "all": true,
-                "request": true,
-                "scope": ["http://**", "http://*", "https://**", "https://*"]
-            }
-        },
-        "windows": [
-            {
-                "fullscreen": false,
-                "resizable": true,
-                "title": "Fluent Fin",
-                "visible": true,
-                "transparent": true,
-                "center": true,
-                "width": 800,
-                "height": 600
-            }
-        ],
-        "security": {
-            "csp": null
-        },
-        "bundle": {
-            "active": true,
-            "targets": "msi",
-            "copyright": "MIT",
-            "category": "Video, Audio",
-            "identifier": "com.hitarashi.fluent-fin",
-            "longDescription": "A simple jellyfin client for Windows 11.",
-            "shortDescription": "Fluent Jellyfin",
-            "icon": [
-                "icons/32x32.png",
-                "icons/128x128.png",
-                "icons/128x128@2x.png",
-                "icons/icon.ico"
-            ]
-        }
-    }
+	"build": {
+		"beforeDevCommand": "pnpm dev",
+		"beforeBuildCommand": "pnpm build",
+		"devPath": "http://localhost:1420",
+		"distDir": "../dist"
+	},
+	"package": {
+		"productName": "Fluent Fin",
+		"version": "../package.json"
+	},
+	"tauri": {
+		"allowlist": {
+			"all": false,
+			"shell": {
+				"all": false,
+				"open": true
+			},
+			"window": {
+				"setFullscreen": true
+			},
+			"http": {
+				"all": true,
+				"request": true,
+				"scope": ["http://**", "http://*", "https://**", "https://*"]
+			}
+		},
+		"windows": [
+			{
+				"fullscreen": false,
+				"resizable": true,
+				"title": "Fluent Fin",
+				"visible": true,
+				"transparent": true,
+				"center": true,
+				"width": 800,
+				"height": 600
+			}
+		],
+		"security": {
+			"csp": null
+		},
+		"bundle": {
+			"active": true,
+			"targets": "msi",
+			"copyright": "MIT",
+			"category": "Video, Audio",
+			"identifier": "com.hitarashi.fluent-fin",
+			"longDescription": "A simple jellyfin client for Windows 11.",
+			"shortDescription": "Fluent Jellyfin",
+			"icon": [
+				"icons/32x32.png",
+				"icons/128x128.png",
+				"icons/128x128@2x.png",
+				"icons/icon.ico"
+			]
+		}
+	}
 }
