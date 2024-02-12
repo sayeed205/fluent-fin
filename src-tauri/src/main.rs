@@ -4,7 +4,7 @@
 use tauri::Manager;
 
 use window_shadows::set_shadow;
-use window_vibrancy::apply_mica;
+use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
 
 fn main() {
     tauri::Builder::default()
@@ -20,6 +20,10 @@ fn main() {
                 // Unspecified
                 dark_light::Mode::Default => false,
             };
+
+            #[cfg(target_os = "macos")]
+            apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+                .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
 
             #[cfg(target_os = "windows")]
             apply_mica(&window, Some(is_dark)).expect("Failed to apply mica");
