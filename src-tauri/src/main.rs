@@ -3,8 +3,14 @@
 
 use tauri::Manager;
 
+#[cfg(target_os = "windows")]
 use window_shadows::set_shadow;
-use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
+
+#[cfg(target_os = "windows")]
+use window_vibrancy::apply_mica;
+
+#[cfg(target_os = "macos")]
+use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
 fn main() {
     tauri::Builder::default()

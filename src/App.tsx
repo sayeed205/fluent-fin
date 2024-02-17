@@ -1,55 +1,73 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import {
+    Navigate,
+    RouterProvider,
+    createBrowserRouter,
+} from 'react-router-dom';
 
-import { Toaster } from "@/components/ui";
-import { ServerList, SetupServer, UserLogin } from "@/routes/public";
-import Root from "@/routes/root";
-import Setup from "@/routes/setup";
+import { Toaster } from '@/components/ui';
+import { Home } from '@/routes/protected';
+import { ServerList, SetupServer, UserLogin } from '@/routes/public';
+import Root from '@/routes/root';
+import { initializeApp } from '@/utils';
+import { useCentralStore } from '@/utils/storage';
 
-function Apps() {
-	return (
-		<div>
-			<h1>React TypeScript App</h1>
-			<p>My first React TypeScript app</p>
-		</div>
-	);
-}
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            networkMode: 'always',
+            staleTime: 69420 + 50580, // 2 mins
+        },
+        mutations: {
+            networkMode: 'always',
+        },
+    },
+});
 
-const router = createBrowserRouter([
-	{
-		path: "/setup",
-		element: <Setup />,
-		children: [
-			{
-				path: "server",
-				element: <SetupServer />,
-			},
-			{
-				path: "list",
-				element: <ServerList />,
-			},
-			{
-				path: "login/user",
-				element: <UserLogin />,
-			},
-		],
-	},
-	{
-		path: "/",
-		element: <Root />,
-		children: [
-			{
-				path: "/",
-				element: <Apps />,
-			},
-		],
-	},
-]);
+const App = () => {
+    const initialRoute = useCentralStore(state => state.initialRoute);
 
-const App = () => (
-	<>
-		<RouterProvider router={router} />
-		<Toaster />
-	</>
-);
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <Navigate to={initialRoute} />,
+        },
+        {
+            path: '/login/index',
+            element: <UserLogin />,
+        },
+        {
+            path: '/setup/server',
+            element: <SetupServer />,
+        },
+        {
+            path: '/servers/list',
+            element: <ServerList />,
+        },
+        {
+            path: '/auth',
+            element: <Root />,
+            children: [
+                {
+                    path: 'home',
+                    element: <Home />,
+                },
+            ],
+        },
+    ]);
+
+    useEffect(() => {
+        initializeApp();
+    }, []);
+    return (
+        <>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+                <Toaster />
+            </QueryClientProvider>
+        </>
+    );
+};
 
 export default App;
